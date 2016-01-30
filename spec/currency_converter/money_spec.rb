@@ -1,23 +1,23 @@
 require "spec_helper"
 
-require_relative "../../lib/currency_converter/money"
+require_relative "../../lib/currency_converter"
 
-describe Money do
+describe CurrencyConverter::Money do
 
   subject { described_class.new(50, "EUR") }
 
   before do
-    Money.conversion_rates("EUR", {
+    CurrencyConverter::Money.conversion_rates("EUR", {
       "USD" => 1.08
     })
   end
 
-  let(:twenty_euros)       { Money.new(20, "EUR") }
-  let(:twenty_dollars)     { Money.new(20, "USD") }
-  let(:fifty_euros)        { Money.new(50, "EUR") }
-  let(:fifty_two_euros)    { Money.new(52, "EUR") }
-  let(:fifty_two_dollars)  { Money.new(52, "USD") }
-  let(:fifty_four_dollars) { Money.new(54, "USD") }
+  let(:twenty_euros)       { CurrencyConverter::Money.new(20, "EUR") }
+  let(:twenty_dollars)     { CurrencyConverter::Money.new(20, "USD") }
+  let(:fifty_euros)        { CurrencyConverter::Money.new(50, "EUR") }
+  let(:fifty_two_euros)    { CurrencyConverter::Money.new(52, "EUR") }
+  let(:fifty_two_dollars)  { CurrencyConverter::Money.new(52, "USD") }
+  let(:fifty_four_dollars) { CurrencyConverter::Money.new(54, "USD") }
 
   describe "#amount" do
     it "returns amount" do
@@ -40,7 +40,7 @@ describe Money do
   describe "#convert_to" do
 
     it "returns dollars" do
-      expect(subject.convert_to("USD").class).to be Money
+      expect(subject.convert_to("USD").class).to be CurrencyConverter::Money
       expect(subject.convert_to("USD").inspect).to eql("54.00 USD")
 
     end
@@ -115,7 +115,7 @@ describe Money do
       end
 
       it "compares if it is not the same amount" do
-        expect(subject > Money.new(40, "EUR")).to be_truthy
+        expect(subject > CurrencyConverter::Money.new(40, "EUR")).to be_truthy
       end
     end
 
@@ -147,7 +147,7 @@ describe Money do
       end
 
       it "compares if it is not the same amount" do
-        expect(subject < Money.new(56, "USD")).to be_truthy
+        expect(subject < CurrencyConverter::Money.new(56, "USD")).to be_truthy
       end
     end
   end
